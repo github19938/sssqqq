@@ -1,0 +1,80 @@
+create table ask_base
+(
+	id int auto_increment comment '主键'
+		primary key,
+	userId int not null comment '用户id',
+	title varchar(300) not null comment '标题',
+	brower int null comment '浏览量',
+	createTime timestamp default CURRENT_TIMESTAMP not null,
+	updateTime timestamp default CURRENT_TIMESTAMP not null,
+	commentNum int null comment '评论数',
+	love int null comment '喜欢数',
+	hate int null comment '讨厌数',
+	is_delete tinyint null comment '0删除，1未删除'
+)
+comment '提问表'
+;
+
+create table comment_first
+(
+	id int auto_increment
+		primary key,
+	askId int null,
+	userId int null,
+	comm_content text null,
+	love_num int null,
+	hate_num int null,
+	update_time timestamp default CURRENT_TIMESTAMP not null,
+	create_time timestamp default CURRENT_TIMESTAMP not null,
+	is_delete tinyint(1) null comment '0删除，1未删除'
+)
+comment '一级评论'
+;
+
+create table comment_second
+(
+	id int auto_increment
+		primary key,
+	commed_id int null comment '被评论的id',
+	usered_id int null comment '被评论用户id',
+	user_id int null comment '主动者id',
+	comm_content text null,
+	crteate_time timestamp default CURRENT_TIMESTAMP not null,
+	update_time timestamp default '0000-00-00 00:00:00' not null,
+	is_delete tinyint(1) null
+)
+comment '评论三级'
+;
+
+create table dictionary
+(
+	id int not null comment '主键'
+		primary key,
+	name varchar(20) not null comment '数据名称',
+	type int not null comment 'name对应的数值',
+	create_time timestamp default CURRENT_TIMESTAMP not null comment '创建时间'
+)
+comment '字典表'
+;
+
+create table sys_user_detail
+(
+	id int auto_increment
+		primary key,
+	loginId int null comment '登录表id'
+)
+;
+
+create table sys_user_login
+(
+	id int auto_increment
+		primary key,
+	phone int not null comment '手机号',
+	createTime timestamp default CURRENT_TIMESTAMP not null,
+	passWord varchar(200) not null comment '密码',
+	constraint SysUserLogin_phone_uindex
+		unique (phone)
+)
+comment '系统用户表'
+;
+
